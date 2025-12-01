@@ -1,4 +1,3 @@
-
 name: CI
 
 on:
@@ -8,12 +7,19 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
+
       - uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
-      - name: Install deps
+          python-version: "3.10"
+
+      - name: Install dependencies
         run: pip install -r requirements.txt
+
+      - name: Add project to PYTHONPATH
+        run: echo "PYTHONPATH=$PWD" >> $GITHUB_ENV
+
       - name: Run tests
         run: pytest --cov=unezespanol --cov-report=xml --cov-report=term
